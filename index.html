@@ -11,80 +11,82 @@
             <h1>Expense Tracker</h1>
         </header>
         <main>
-            <section>
-                <h2>Add Expense</h2>
-                <form id="expense-form">
-                    <label for="description">
-                        Description
-                    </label>
-                    <input
-                        type="text"
-                        id="description"
-                        name="description">
-                    
-                    <label for="amount">
-                        Amount
-                    </label>
-                    <input
-                        type="number"
-                        id="amount"
-                        name="amount"
-                        min="0"
-                        step="0.01">
-                    
-                    <label for="catagory">
-                        Category
-                    </label>
-                    <select
-                        id="category"
-                        name="category">
+            <div class="top-sections">
+                <section>
+                    <h2>Add Expense</h2>
+                    <form id="expense-form">
+                        <label for="description">
+                            Description
+                        </label>
+                        <input
+                            type="text"
+                            id="description"
+                            name="description">
+                        
+                        <label for="amount">
+                            Amount
+                        </label>
+                        <input
+                            type="number"
+                            id="amount"
+                            name="amount"
+                            min="0"
+                            step="0.01">
+                        
+                        <label for="catagory">
+                            Category
+                        </label>
+                        <select
+                            id="category"
+                            name="category">
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        
+                        <label for="date">
+                            Date
+                        </label>
+                        <input
+                        type="date"
+                        id="date"
+                        name="date">
+
+                        <button type="submit">Add Expense</button>
+                    </form>
+                    <p id="error-message"></p>
+                </section>
+            
+                <section>
+                    <h2>Controls</h2>
+                    <label for="filter-category">Filter by Category</label>
+                    <select id="filter-category">
+                        <option value="All">All</option>
                         <option value="Food">Food</option>
                         <option value="Transport">Transport</option>
                         <option value="Entertainment">Entertainment</option>
                         <option value="Other">Other</option>
                     </select>
-                    
-                    <label for="date">
-                        Date
+                    <label for="sort-expenses">
+                        Sort Expenses
                     </label>
-                    <input
-                    type="date"
-                    id="date"
-                    name="date">
-
-                    <button type="submit">Add Expense</button>
-                </form>
-                <p id="error-message"></p>
-            </section>
-            
-            <section>
-                <h2>Controls</h2>
-                <label for="filter-category">Filter by Category</label>
-                <select id="filter-category">
-                    <option value="All">All</option>
-                    <option value="Food">Food</option>
-                    <option value="Transport">Transport</option>
-                    <option value="Entertainment">Entertainment</option>
-                    <option value="Other">Other</option>
-                </select>
-                <label for="sort-expenses">
-                    Sort Expenses
-                </label>
-                <select id="sort-expenses">
-                    <option value="date-descending">
-                        Date (Newest First)
-                    </option>
-                    <option value="date-ascending">
-                        Date (Oldest First)
-                    </option>
-                    <option value="amount-descending">
-                        Amount (Highest First)
-                    </option>
-                    <option value="amount-ascending">
-                        Amount (Lowest First)
-                    </option>
-                </select>
-            </section>
+                    <select id="sort-expenses">
+                        <option value="date-descending">
+                            Date (Newest First)
+                        </option>
+                        <option value="date-ascending">
+                            Date (Oldest First)
+                        </option>
+                        <option value="amount-descending">
+                            Amount (Highest First)
+                        </option>
+                        <option value="amount-ascending">
+                            Amount (Lowest First)
+                        </option>
+                    </select>
+                </section>
+            </div>
             
             <section>
                 <h2>Totals</h2>

@@ -27,3 +27,13 @@ section {
     margin-bottom: 20px;
     border-radius: 8px;
 }
+
+.top-sections {
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+}
+
+.top-sections section {
+    flex: 1;
+}
