@@ -62,3 +62,9 @@ button:hover {
     text-align: center;
     padding: 20px;
 }
+
+@media (max-width: 768px) {
+    .top-sections {
+        flex-direction: column;
+    }
+}
