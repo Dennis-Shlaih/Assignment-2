@@ -19,22 +19,32 @@ const expenseCount = document.querySelector("#expense-count");
 
 const errorMessage = document.querySelector("#error-message");
 
+const categoryFilter = document.querySelector("#filter-category");
+
 const emptyState = document.querySelector("#empty-state");
 
 
 // Application State
 let expenses = [];
 
+// Category
+let selectedCategory = "All"
+
 // Functions
 const renderExpenses = () => {
     expenseList.innerHTML = "";
-    if (expenses.length !== 0) {
+    filteredExpenses = expenses;
+    if (selectedCategory !== "All") {
+        filteredExpenses = expenses.filter(expense => 
+            expense.category === selectedCategory);
+    } 
+    if (filteredExpenses.length !== 0) {
         emptyState.style.display = "none";
     }
     else {
         emptyState.style.display = "block";
     }
-    expenses.forEach(expense => {
+    filteredExpenses.forEach(expense => {
         const expenseCard = document.createElement("div");
         expenseCard.textContent = 
             `${expense.description} - $${expense.amount}`;
@@ -43,12 +53,13 @@ const renderExpenses = () => {
         expenseCard.appendChild(deleteButton);
         expenseList.appendChild(expenseCard);
         deleteButton.addEventListener("click", () => {
-            expenses = expenses.filter(obj => obj.id !== expense.id);
+            expenses = expenses.filter(currentExpense => 
+                currentExpense.id !== expense.id);
             renderExpenses();
         });
     });
-    updateTotals();
-    updateCategoryTotals();
+    updateTotals(filteredExpenses);
+    updateCategoryTotals(filteredExpenses);
 };
 
 const validateForm = (description, amount, date) => {
@@ -67,14 +78,14 @@ const validateForm = (description, amount, date) => {
     return "";
 };
 
-const updateTotals = () => {
+const updateTotals = (expenses) => {
     let totalAmount = expenses.reduce((acc, expense) => 
         acc + expense.amount, 0);
     overallTotal.textContent = totalAmount;
     expenseCount.textContent = expenses.length;
 };
 
-const updateCategoryTotals = () => {
+const updateCategoryTotals = (expenses) => {
     const totals = {};
     expenses.forEach(expense => {
         if (!totals[expense.category]) {
@@ -117,6 +128,12 @@ expenseForm.addEventListener("submit", (event) => {
     else {
         errorMessage.textContent = error;
     }
+});
+
+categoryFilter.addEventListener("change", (event) => {
+    selectedCategory = event.target.value;
+    console.log(selectedCategory);
+    renderExpenses();
 });
 
 
