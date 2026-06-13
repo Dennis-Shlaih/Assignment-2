@@ -17,15 +17,19 @@ const expenseCount = document.querySelector("#expense-count");
 
 const errorMessage = document.querySelector("#error-message");
 
-console.log(description);
-
-// Global Expenses
+// Application State
 let expenses = [];
 
 // Functions
-function renderExpenses() {
+const renderExpenses = () => {
     expenseList.innerHTML = "";
-}
+    expenses.forEach(expense => {
+        const expenseCard = document.createElement("div");
+        expenseCard.textContent = 
+            `${expense.description} - $${expense.amount}`;
+        expenseList.appendChild(expenseCard);
+    });
+};
 
 const validateForm = (description, amount, date) => {
     if (description.trim() === "") {
@@ -42,7 +46,7 @@ const validateForm = (description, amount, date) => {
     }
 
     return "";
-}
+};
 
 expenseForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -50,8 +54,8 @@ expenseForm.addEventListener("submit", (event) => {
     const amount = Number(amountInput.value);
     const category = categoryInput.value;
     const date = dateInput.value;
-    error = validateForm(description, amount, date);
-    if (error == "") {
+    const error = validateForm(description, amount, date);
+    if (!error) {
         errorMessage.textContent = "";
         const expense = {
             id: Date.now(),
@@ -61,6 +65,8 @@ expenseForm.addEventListener("submit", (event) => {
             date
         };
         expenses.push(expense);
+        renderExpenses();
+        expenseForm.reset();
     }
     else {
         errorMessage.textContent = error;
