@@ -19,6 +19,8 @@ const expenseCount = document.querySelector("#expense-count");
 
 const errorMessage = document.querySelector("#error-message");
 
+const emptyState = document.querySelector("#empty-state");
+
 
 // Application State
 let expenses = [];
@@ -26,11 +28,24 @@ let expenses = [];
 // Functions
 const renderExpenses = () => {
     expenseList.innerHTML = "";
+    if (expenses.length !== 0) {
+        emptyState.style.display = "none";
+    }
+    else {
+        emptyState.style.display = "block";
+    }
     expenses.forEach(expense => {
         const expenseCard = document.createElement("div");
         expenseCard.textContent = 
             `${expense.description} - $${expense.amount}`;
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete"
+        expenseCard.appendChild(deleteButton);
         expenseList.appendChild(expenseCard);
+        deleteButton.addEventListener("click", () => {
+            expenses = expenses.filter(obj => obj.id !== expense.id);
+            renderExpenses();
+        });
     });
     updateTotals();
     updateCategoryTotals();
