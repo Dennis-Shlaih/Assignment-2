@@ -13,9 +13,12 @@ const expenseList = document.querySelector("#expense-list");
 
 const overallTotal = document.querySelector("#overall-total");
 
+const categoryTotals = document.querySelector("#category-totals");
+
 const expenseCount = document.querySelector("#expense-count");
 
 const errorMessage = document.querySelector("#error-message");
+
 
 // Application State
 let expenses = [];
@@ -30,6 +33,7 @@ const renderExpenses = () => {
         expenseList.appendChild(expenseCard);
     });
     updateTotals();
+    updateCategoryTotals();
 };
 
 const validateForm = (description, amount, date) => {
@@ -53,6 +57,26 @@ const updateTotals = () => {
         acc + expense.amount, 0);
     overallTotal.textContent = totalAmount;
     expenseCount.textContent = expenses.length;
+};
+
+const updateCategoryTotals = () => {
+    const totals = {};
+    expenses.forEach(expense => {
+        if (!totals[expense.category]) {
+            totals[expense.category] = 0;
+        }
+
+        totals[expense.category] += expense.amount;
+    }) 
+    
+    categoryTotals.innerHTML = "";
+    Object.entries(totals).forEach(([category, amount]) => {
+        const totalItem =
+            document.createElement("p");
+        totalItem.textContent =
+            `${category}: $${amount}`;
+        categoryTotals.appendChild(totalItem);
+    });
 };
 
 expenseForm.addEventListener("submit", (event) => {
