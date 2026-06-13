@@ -29,11 +29,11 @@ const renderExpenses = () => {
             `${expense.description} - $${expense.amount}`;
         expenseList.appendChild(expenseCard);
     });
+    updateTotals();
 };
 
 const validateForm = (description, amount, date) => {
     if (description.trim() === "") {
-        console.log(description);
         return "Description is required.";
     }
     
@@ -46,6 +46,13 @@ const validateForm = (description, amount, date) => {
     }
 
     return "";
+};
+
+const updateTotals = () => {
+    let totalAmount = expenses.reduce((acc, expense) => 
+        acc + expense.amount, 0);
+    overallTotal.textContent = totalAmount;
+    expenseCount.textContent = expenses.length;
 };
 
 expenseForm.addEventListener("submit", (event) => {
