@@ -30,7 +30,7 @@ const emptyState = document.querySelector("#empty-state");
 
 
 // ====================
-// Applocate State
+// Application State
 // ====================
 
 let expenses = [];
@@ -76,6 +76,25 @@ const sortExpenses = (expenses) => {
     if (selectedSort === "amount-ascending") {
         return expenses.sort((a, b) => 
             a.amount - b.amount);
+    }
+    return expenses;
+};
+
+// ====================
+// LOCAL STORAGE FUNCTIONS
+// ====================
+
+const saveExpenses = () => {
+    localStorage.setItem(
+        "expenses",
+        JSON.stringify(expenses)
+    );
+};
+
+const loadExpenses = () => {
+    const storedExpenses = localStorage.getItem("expenses");
+    if (storedExpenses) {
+        expenses = JSON.parse(storedExpenses);
     }
 };
 
@@ -147,6 +166,7 @@ const renderExpenses = () => {
         deleteButton.addEventListener("click", () => {
             expenses = expenses.filter(currentExpense => 
                 currentExpense.id !== expense.id);
+            saveExpenses();
             renderExpenses();
         });
     });
@@ -175,8 +195,10 @@ expenseForm.addEventListener("submit", (event) => {
             date
         };
         expenses.push(expense);
+        saveExpenses();
         renderExpenses();
         expenseForm.reset();
+        dateInput.value = new Date().toISOString().split("T")[0];
     }
     else {
         errorMessage.textContent = error;
@@ -193,5 +215,8 @@ sortControl.addEventListener("change", (event) => {
     renderExpenses();
 })
 
+loadExpenses();
+dateInput.value = new Date().toISOString().split("T")[0];
+renderExpenses();
 
 
