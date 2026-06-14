@@ -63,8 +63,84 @@ button:hover {
     padding: 20px;
 }
 
+.expense-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.expense-left,
+.expense-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.expense-description {
+    font-weight: 600;
+}
+
+.expense-amount {
+    font-weight: bold;
+    min-width: 80px;
+}
+
+.expense-category {
+    padding: 4px 8px;
+    border-radius: 999px;
+    background-color: #e5e7eb;
+    font-size: 0.9rem;
+}
+
+.expense-date {
+    min-width: 100px;
+    font-size: 0.9rem;
+}
+
+.delete-button {
+    width: auto;
+    margin: 0;
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
 @media (max-width: 768px) {
     .top-sections {
         flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .top-sections {
+        flex-direction: column;
+    }
+
+    .expense-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .expense-left,
+    .expense-right {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .delete-button {
+        width: auto;
     }
 }

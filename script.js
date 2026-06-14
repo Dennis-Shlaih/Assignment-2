@@ -35,9 +35,9 @@ const emptyState = document.querySelector("#empty-state");
 
 let expenses = [];
 
-let selectedCategory = "All"
+let selectedCategory = "All";
 
-let selectedSort = "date-descending"
+let selectedSort = "date-descending";
 
 
 // ====================
@@ -102,6 +102,65 @@ const loadExpenses = () => {
 // UI FUNCTIONS
 // ====================
 
+const createExpenseCard = (expense) => {
+    const expenseCard = document.createElement("div");
+    expenseCard.classList.add("expense-card");
+
+    const leftSection = document.createElement("div");
+    leftSection.classList.add("expense-left");
+
+    const rightSection = document.createElement("div");
+    rightSection.classList.add("expense-right");
+
+    const description = document.createElement("span");
+    description.classList.add("expense-description");
+    description.textContent = expense.description;
+
+    const category = document.createElement("span");
+    category.classList.add("expense-category");
+    category.textContent = expense.category;
+
+    const amount = document.createElement("span");
+    amount.classList.add("expense-amount");
+    amount.textContent =
+        `$${expense.amount.toFixed(2)}`;
+
+    const date = document.createElement("span");
+    date.classList.add("expense-date");
+    date.textContent = expense.date;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("delete-button");
+    deleteButton.textContent = "Delete";
+
+    deleteButton.addEventListener("click", () => {
+        expenses = expenses.filter(
+            currentExpense =>
+                currentExpense.id !== expense.id
+        );
+        saveExpenses();
+        renderExpenses();
+    });
+
+    leftSection.append(
+        description,
+        category
+    );
+
+    rightSection.append(
+        amount,
+        date,
+        deleteButton
+    );
+
+    expenseCard.append(
+        leftSection,
+        rightSection
+    );
+
+    return expenseCard;
+};
+
 const updateTotals = (expenses) => {
     let totalAmount = expenses.reduce((acc, expense) => 
         acc + expense.amount, 0);
@@ -144,31 +203,9 @@ const renderExpenses = () => {
     }
     let displayedExpenses = sortExpenses([...filteredExpenses]);
     displayedExpenses.forEach(expense => {
-        const expenseCard = document.createElement("div");
-        const description = document.createElement("span");
-        description.textContent = expense.description;
-        const amount = document.createElement("span");
-        amount.textContent = `$${expense.amount.toFixed(2)}`;
-        const category = document.createElement("span");
-        category.textContent = expense.category;
-        const date = document.createElement("span");
-        date.textContent = expense.date;
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete"
-        expenseCard.append(
-            description,
-            amount,
-            category,
-            date,
-            deleteButton
+        expenseList.appendChild(
+            createExpenseCard(expense)
         );
-        expenseList.appendChild(expenseCard);
-        deleteButton.addEventListener("click", () => {
-            expenses = expenses.filter(currentExpense => 
-                currentExpense.id !== expense.id);
-            saveExpenses();
-            renderExpenses();
-        });
     });
     updateTotals(displayedExpenses);
     updateCategoryTotals(displayedExpenses);
