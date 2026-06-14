@@ -24,9 +24,15 @@ const errorMessage = document.querySelector("#error-message");
 
 const categoryFilter = document.querySelector("#filter-category");
 
-const sortControl = document.querySelector("#sort-expenses")
+const sortControl = document.querySelector("#sort-expenses");
+
+const convertedTotal = document.querySelector("#converted-total");
+
+const convertButton = document.querySelector("#convert-button");
 
 const emptyState = document.querySelector("#empty-state");
+
+
 
 
 // ====================
@@ -98,6 +104,31 @@ const loadExpenses = () => {
     }
 };
 
+
+// ====================
+// CURRENCY CONVERSION
+// ====================
+
+const convertCurrency = async () => {
+    convertedTotal.textContent =
+        "Loading exchange rates...";
+    try {
+        const response = 
+            await fetch("https://open.er-api.com/v6/latest/USD");
+        const data = await response.json();
+        const rate = data.rates["EUR"];
+        const totalAmount = expenses.reduce(
+            (acc, expense) => acc + expense.amount, 0
+        );
+        const convertedAmount = totalAmount * rate;
+        convertedTotal.textContent =
+            `€${convertedAmount.toFixed(2)} EUR`;
+    }
+    catch (error) {
+        convertedTotal.textContent = "Unable to load exchange rates.";
+    }
+};
+
 // ====================
 // UI FUNCTIONS
 // ====================
@@ -139,6 +170,7 @@ const createExpenseCard = (expense) => {
                 currentExpense.id !== expense.id
         );
         saveExpenses();
+        convertCurrency();
         renderExpenses();
     });
 
@@ -252,8 +284,10 @@ sortControl.addEventListener("change", (event) => {
     renderExpenses();
 })
 
+convertButton.addEventListener("click", () => {
+    convertCurrency();
+});
+
 loadExpenses();
 dateInput.value = new Date().toISOString().split("T")[0];
 renderExpenses();
-
-
