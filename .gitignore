@@ -1,5 +1,10 @@
-*.dmb
-*.rsc
-*.int
-*.lk
-*.zip
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
