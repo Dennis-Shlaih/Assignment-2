@@ -119,14 +119,7 @@ button:hover {
     .top-sections {
         flex-direction: column;
     }
-}
-
-@media (max-width: 768px) {
-
-    .top-sections {
-        flex-direction: column;
-    }
-
+    
     .expense-card {
         flex-direction: column;
         align-items: flex-start;
